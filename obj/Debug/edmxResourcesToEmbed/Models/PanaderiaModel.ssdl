@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PanaderiaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Factura">
+    <Key>
+      <PropertyRef Name="ID_Factura" />
+    </Key>
+    <Property Name="ID_Factura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fecha" Type="date" Nullable="false" />
+    <Property Name="Total" Type="float" Nullable="false" />
+    <Property Name="Cliente" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="ID_User" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Factura_Inevntario">
+    <Key>
+      <PropertyRef Name="ID_FACTURAL" />
+    </Key>
+    <Property Name="ID_FACTURAL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Inventario" Type="int" Nullable="false" />
+    <Property Name="ID_Factura" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" />
+  </EntityType>
+  <EntityType Name="Inventario">
+    <Key>
+      <PropertyRef Name="ID_Inventario" />
+    </Key>
+    <Property Name="ID_Inventario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Precio" Type="float" />
+    <Property Name="Cantidad" Type="int" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="ID_User" />
+    </Key>
+    <Property Name="ID_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contraseña" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Factura__ID_User__267ABA7A">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Factura">
+        <PropertyRef Name="ID_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Factura_I__ID_Fa__2C3393D0">
+    <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+    <End Role="Factura_Inevntario" Type="Self.Factura_Inevntario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factura">
+        <PropertyRef Name="ID_Factura" />
+      </Principal>
+      <Dependent Role="Factura_Inevntario">
+        <PropertyRef Name="ID_Factura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Factura_I__ID_In__2B3F6F97">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+    <End Role="Factura_Inevntario" Type="Self.Factura_Inevntario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="ID_Inventario" />
+      </Principal>
+      <Dependent Role="Factura_Inevntario">
+        <PropertyRef Name="ID_Inventario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PanaderiaModelStoreContainer">
+    <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Factura_Inevntario" EntityType="Self.Factura_Inevntario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Factura__ID_User__267ABA7A" Association="Self.FK__Factura__ID_User__267ABA7A">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Factura" EntitySet="Factura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Factura_I__ID_Fa__2C3393D0" Association="Self.FK__Factura_I__ID_Fa__2C3393D0">
+      <End Role="Factura" EntitySet="Factura" />
+      <End Role="Factura_Inevntario" EntitySet="Factura_Inevntario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Factura_I__ID_In__2B3F6F97" Association="Self.FK__Factura_I__ID_In__2B3F6F97">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="Factura_Inevntario" EntitySet="Factura_Inevntario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

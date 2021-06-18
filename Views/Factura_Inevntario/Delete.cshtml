@@ -1,0 +1,48 @@
+﻿@model PanaderiaDonMario.Models.Factura_Inevntario
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Factura_Inevntario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Factura.Cliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Factura.Cliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inventario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inventario.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

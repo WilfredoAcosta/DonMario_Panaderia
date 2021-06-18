@@ -1,0 +1,48 @@
+﻿@model IEnumerable<PanaderiaDonMario.Models.Factura_Inevntario>
+
+@{
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalles</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inventario.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inventario.Precio)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventario.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventario.Precio)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID_FACTURAL }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID_FACTURAL }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID_FACTURAL })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PanaderiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Factura">
+    <Key>
+      <PropertyRef Name="ID_Factura" />
+    </Key>
+    <Property Name="ID_Factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Total" Type="Double" Nullable="false" />
+    <Property Name="Cliente" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Factura__ID_User__267ABA7A" FromRole="Factura" ToRole="Usuario" />
+    <NavigationProperty Name="Factura_Inevntario" Relationship="Self.FK__Factura_I__ID_Fa__2C3393D0" FromRole="Factura" ToRole="Factura_Inevntario" />
+  </EntityType>
+  <EntityType Name="Factura_Inevntario">
+    <Key>
+      <PropertyRef Name="ID_FACTURAL" />
+    </Key>
+    <Property Name="ID_FACTURAL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Inventario" Type="Int32" Nullable="false" />
+    <Property Name="ID_Factura" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK__Factura_I__ID_Fa__2C3393D0" FromRole="Factura_Inevntario" ToRole="Factura" />
+    <NavigationProperty Name="Inventario" Relationship="Self.FK__Factura_I__ID_In__2B3F6F97" FromRole="Factura_Inevntario" ToRole="Inventario" />
+  </EntityType>
+  <EntityType Name="Inventario">
+    <Key>
+      <PropertyRef Name="ID_Inventario" />
+    </Key>
+    <Property Name="ID_Inventario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Precio" Type="Double" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Factura_Inevntario" Relationship="Self.FK__Factura_I__ID_In__2B3F6F97" FromRole="Inventario" ToRole="Factura_Inevntario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="ID_User" />
+    </Key>
+    <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Usuario1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK__Factura__ID_User__267ABA7A" FromRole="Usuario" ToRole="Factura" />
+  </EntityType>
+  <Association Name="FK__Factura__ID_User__267ABA7A">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Factura">
+        <PropertyRef Name="ID_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Factura_I__ID_Fa__2C3393D0">
+    <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+    <End Role="Factura_Inevntario" Type="Self.Factura_Inevntario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factura">
+        <PropertyRef Name="ID_Factura" />
+      </Principal>
+      <Dependent Role="Factura_Inevntario">
+        <PropertyRef Name="ID_Factura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Factura_I__ID_In__2B3F6F97">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+    <End Role="Factura_Inevntario" Type="Self.Factura_Inevntario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="ID_Inventario" />
+      </Principal>
+      <Dependent Role="Factura_Inevntario">
+        <PropertyRef Name="ID_Inventario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PanaderiaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Factura" EntityType="Self.Factura" />
+    <EntitySet Name="Factura_Inevntario" EntityType="Self.Factura_Inevntario" />
+    <EntitySet Name="Inventario" EntityType="Self.Inventario" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK__Factura__ID_User__267ABA7A" Association="Self.FK__Factura__ID_User__267ABA7A">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Factura" EntitySet="Factura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Factura_I__ID_Fa__2C3393D0" Association="Self.FK__Factura_I__ID_Fa__2C3393D0">
+      <End Role="Factura" EntitySet="Factura" />
+      <End Role="Factura_Inevntario" EntitySet="Factura_Inevntario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Factura_I__ID_In__2B3F6F97" Association="Self.FK__Factura_I__ID_In__2B3F6F97">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="Factura_Inevntario" EntitySet="Factura_Inevntario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
